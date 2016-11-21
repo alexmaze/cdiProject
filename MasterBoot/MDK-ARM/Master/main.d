@@ -52,6 +52,9 @@ master\main.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
 master\main.o: ../Inc/main.h
 master\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 master\main.o: ../Drivers/CMSIS/Include/core_cmFunc.h
-master\main.o: ..\..\YD-CdiLibrary\dataStruct.h
-master\main.o: ..\..\YD-CdiLibrary\cLEDs.h
-master\main.o: ..\..\YD-CdiLibrary\cTask.h
+master\main.o: ..\..\YD-HalCdiLibrary\dataStruct.h
+master\main.o: ..\..\YD-HalCdiLibrary\cLEDs.h
+master\main.o: ..\..\YD-HalCdiLibrary\cTask.h
+master\main.o: ..\..\YD-HalCdiLibrary\cWIFI.h
+master\main.o: ..\..\YD-HalCdiLibrary\httpPacket.h
+master\main.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdbool.h

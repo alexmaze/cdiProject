@@ -109,7 +109,7 @@ extern char TCP_CILENT_IPADDRESS[];
 extern char TCP_CILENT_PORT[];
 
 #define WIFI_UART  huart1
-
+#define DEBUG_UART  huart2
 /* 数据类型 */
 typedef enum{
 	STA,
@@ -168,8 +168,8 @@ void cWIFI_CIPSEND ( void );
 bool cWIFI_StrSend (char * pStr);
 void cWIFI_Packet(OPS_TYPE operType, char* jsonData);
 bool cWIFI_Cmd (char * cmd, char * reply1, char * reply2, uint32_t timeout);
-
-
+bool cWIFI_CWJAP ( char * pSSID, char * pPassWord, uint32_t timeout );
+uint8_t cWIFI_TCPSend(uint32_t _msTimeOut);
 
 
 

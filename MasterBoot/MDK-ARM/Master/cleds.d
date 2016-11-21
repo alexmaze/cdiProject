@@ -1,5 +1,5 @@
-master\cleds.o: ..\..\YD-CdiLibrary\cLEDs.c
-master\cleds.o: ..\..\YD-CdiLibrary\cLEDs.h
+master\cleds.o: ..\..\YD-HalCdiLibrary\cLEDs.c
+master\cleds.o: ..\..\YD-HalCdiLibrary\cLEDs.h
 master\cleds.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h
 master\cleds.o: ../Inc/stm32l1xx_hal_conf.h
 master\cleds.o: ../Inc/mxconstants.h

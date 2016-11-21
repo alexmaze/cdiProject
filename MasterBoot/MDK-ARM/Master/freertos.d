@@ -18,7 +18,7 @@ master\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
 master\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 master\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 master\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
-master\freertos.o: ..\..\YD-CdiLibrary\cTask.h
+master\freertos.o: ..\..\YD-HalCdiLibrary\cTask.h
 master\freertos.o: ../Inc/main.h
 master\freertos.o: ../Inc/usart.h
 master\freertos.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h
@@ -48,7 +48,7 @@ master\freertos.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr_ex.h
 master\freertos.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h
 master\freertos.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h
 master\freertos.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h
-master\freertos.o: ..\..\YD-CdiLibrary\cLEDs.h
-master\freertos.o: ..\..\YD-CdiLibrary\cWIFI.h
-master\freertos.o: ..\..\YD-CdiLibrary\httpPacket.h
+master\freertos.o: ..\..\YD-HalCdiLibrary\cLEDs.h
+master\freertos.o: ..\..\YD-HalCdiLibrary\cWIFI.h
+master\freertos.o: ..\..\YD-HalCdiLibrary\httpPacket.h
 master\freertos.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdbool.h

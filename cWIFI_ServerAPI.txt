@@ -1,0 +1,59 @@
+1. 硬件状态报告
+ HTTP GET http://alexyan.xyz:4000/api/hardware/report/HW001
+ 返回HTTP状态200
+ 返回内容为1byte 数字：0代表无更新
+         >0代表有更新，且二进制包大小为结果（单位byte）
+ 
+ 2. 下载二进制包
+ HTTP GET http://alexyan.xyz:4000/api/hardware/download/HW001
+ 请求HEADER内容： Range byte=0-5
+ 返回HTTP状态200
+ 返回内容为相应区间的二进制文件内容
+ 
+ 3. 下载完成报告
+ HTTP GET http://alexyan.xyz:4000/api/hardware/finish/HW001
+ 返回HTTP状态200
+ 如果状态不是200需要重复发包确认
+ 
+ 
+ 
+ 4. 手动通知硬件有更新
+ HTTP POST http://alexyan.xyz:4000/api/hardware/image
+ HEADER: Content-Type: application/json
+ Body:
+ {
+   "id": "HW001",
+   "image": {
+    "size": 4724,
+      "path": "public/range.txt"
+   }
+ }
+ 
+ 5. 检查服务器状态
+HTTP GET http://alexyan.xyz:4000/api/hardware/status
+
+1.
+GET /api/hardware/report/HW001 HTTP/1.1
+Host: alexyan.xyz:4000
+
+
+2.
+GET /api/hardware/download/HW001 HTTP/1.1
+Host: alexyan.xyz:4000
+Range: byte=0-5
+
+
+3.
+GET /api/hardware/finish/HW001 HTTP/1.1
+Host: alexyan.xyz:4000
+
+需要检测状态：200，直到检测成功
+否则舍弃数据，回到初始状态
+
+4.
+POST /api/hardware/image/HW001 HTTP/1.1
+Host: alexyan.xyz:4000
+
+5.
+GET /api/hardware/status/HW001 HTTP/1.1
+Host: alexyan.xyz:4000

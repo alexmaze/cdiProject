@@ -334,7 +334,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32L152xB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32L1xx_HAL_Driver/Inc;../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Drivers/CMSIS/Include;../Drivers/CMSIS/Device/ST/STM32L1xx/Include;..\YD-innoLib;..\..\YD-CdiLibrary</IncludePath>
+              <IncludePath>../Inc; ../Drivers/STM32L1xx_HAL_Driver/Inc; ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy; ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3; ../Middlewares/Third_Party/FreeRTOS/Source/include; ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS; ../Drivers/CMSIS/Include; ../Drivers/CMSIS/Device/ST/STM32L1xx/Include; ..\YD-innoLib; ..\..\YD-CdiLibrary; ..\..\YD-HalCdiLibrary</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -570,17 +570,17 @@
             <File>
               <FileName>cLEDs.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\YD-CdiLibrary\cLEDs.c</FilePath>
+              <FilePath>..\..\YD-HalCdiLibrary\cLEDs.c</FilePath>
             </File>
             <File>
               <FileName>cWIFI.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\YD-CdiLibrary\cWIFI.c</FilePath>
+              <FilePath>..\..\YD-HalCdiLibrary\cWIFI.c</FilePath>
             </File>
             <File>
               <FileName>cTask.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\YD-CdiLibrary\cTask.c</FilePath>
+              <FilePath>..\..\YD-HalCdiLibrary\cTask.c</FilePath>
             </File>
           </Files>
         </Group>

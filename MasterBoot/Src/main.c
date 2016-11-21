@@ -80,11 +80,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-//  MX_DMA_Init();
-//  MX_USART1_UART_Init();
+  MX_DMA_Init();
+  MX_USART1_UART_Init();
+  MX_USART2_UART_Init();
 
   /* USER CODE BEGIN 2 */
-
+	HAL_Delay(100);
+	HAL_UART_Transmit(&DEBUG_UART, "HelloWorld", 10, 100);
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

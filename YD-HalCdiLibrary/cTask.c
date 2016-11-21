@@ -11,12 +11,14 @@ void cTask_Init(void) {
 
 	cLEDs_Init();
 	cWIFI_Init();
+//	HAL_GPIO_WritePin(WIFI_WorkMode_GPIO_Port,WIFI_WorkMode_Pin,GPIO_PIN_RESET);	//下拉：工作模式;
+//	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_SET);	//1）高电平工作;2）低电平模块供电关掉;
 //	cWIFI_MspDeInit(&WIFI_UART);
 }
 void cTask_List(void) {
 
   cLEDs_Task();
-//	cWIFI_Task();
+	cWIFI_Task();
 }
 
 /*任务1： cLEDs  开始*/
@@ -71,15 +73,25 @@ void cWIFI_TaskFun(void const * argument)
 //	uint8_t length = strlen(cCmd);
 //	HAL_UART_Transmit(&WIFI_UART, cCmd, length, TX_TIMEOUT);
 //	cWIFI_Rst();
-	cWIFI_CIPMUX();
-	cWIFI_CWLAP();
-	cWIFI_JoinAP();
-	osDelay(5000);
+//	cWIFI_CIPMUX();
+//	cWIFI_CWLAP();
+//	cWIFI_JoinAP();
+	cWIFI_Cmd("AT+CIPMODE=0","OK",NULL,1000);
+	osDelay(100);
+	cWIFI_CWJAP(WIFI_SSID_NAME,WIFI_PASSWORD, 7800);
+	osDelay(1000);
+	cWIFI_Cmd("AT+CIPSTART=\"TCP\",\"alexyan.xyz\",4000","OK",NULL,2500);
+	osDelay(1000);
+	cWIFI_TCPSend(8000);
+//	cWIFI_Cmd("AT+CIPSEND=67","OK",NULL,2500);
+//	osDelay(100);
+//	cWIFI_Cmd("GET /api/hardware/report/HW001 HTTP/1.1\r\nHost: alexyan.xyz:4000\r\n\r\n","SEND OK",NULL,5000);
+	osDelay(1000);
 }
 
 void cWIFI_Task(void) {
  
-  osThreadDef(cWIFI_Handle, cWIFI_TaskFun, osPriorityNormal, 0, 128);
+  osThreadDef(cWIFI_Handle, cWIFI_TaskFun, osPriorityAboveNormal, 0, 256);
   cWIFI_TaskHandle = osThreadCreate(osThread(cWIFI_Handle), NULL);
 
 }

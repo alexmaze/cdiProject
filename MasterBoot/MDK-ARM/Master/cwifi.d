@@ -1,7 +1,7 @@
-master\cwifi.o: ..\..\YD-CdiLibrary\cWIFI.c
+master\cwifi.o: ..\..\YD-HalCdiLibrary\cWIFI.c
 master\cwifi.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
 master\cwifi.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdio.h
-master\cwifi.o: ..\..\YD-CdiLibrary\cWIFI.h
+master\cwifi.o: ..\..\YD-HalCdiLibrary\cWIFI.h
 master\cwifi.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h
 master\cwifi.o: ../Inc/stm32l1xx_hal_conf.h
 master\cwifi.o: ../Inc/mxconstants.h
@@ -32,7 +32,7 @@ master\cwifi.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h
 master\cwifi.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h
 master\cwifi.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h
 master\cwifi.o: ../Inc/usart.h
-master\cwifi.o: ..\..\YD-CdiLibrary\httpPacket.h
+master\cwifi.o: ..\..\YD-HalCdiLibrary\httpPacket.h
 master\cwifi.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdbool.h
 master\cwifi.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 master\cwifi.o: D:\Keil\ARM\ARMCC\Bin\..\include\stddef.h

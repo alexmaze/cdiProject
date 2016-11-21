@@ -25,5 +25,5 @@ brief		:	main header
 #include "dataStruct.h"
 #include "cLEDs.h"
 #include "cTask.h"
-
+#include "cWIFI.h"
 #endif

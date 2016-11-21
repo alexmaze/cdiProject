@@ -15,7 +15,7 @@ brief	:	code file
 #include "cmsis_os.h"
 
 char WIFI_SSID_NAME[] = "YD-Xiaoxin";
-char WIFI_PASSWORD[] = "12341234";
+char WIFI_PASSWORD[]  = "12341234";
 //char WIFI_SSID_NAME[] = "QK365";
 //char WIFI_PASSWORD[] = "kunlong123456";
 
@@ -36,16 +36,16 @@ WIFI_DataType wifiData;
 //httpPacket.host="cdi.tongji.edu.cn";
 //httpPacket.contentType = "application/json";
 
-//#ifdef __GNUC__  
-//#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)  
-//#else  
-//#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)  
-//#endif /* __GNUC__ */  
-//PUTCHAR_PROTOTYPE  
-//{  
-//    HAL_UART_Transmit(&huart1 , (uint8_t *)&ch, 1, 100);  
-//    return ch;  
-//}
+#ifdef __GNUC__  
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)  
+#else  
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)  
+#endif /* __GNUC__ */  
+PUTCHAR_PROTOTYPE  
+{  
+    HAL_UART_Transmit(&DEBUG_UART , (uint8_t *)&ch, 1, 100);  
+    return ch;  
+}
 
 /**
 ****************************************************************
@@ -65,10 +65,15 @@ void cWIFI_Init(void)
 	HAL_GPIO_WritePin(WIFI_WorkMode_GPIO_Port,WIFI_WorkMode_Pin,GPIO_PIN_RESET);	//下拉：工作模式;
 	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_SET);	//1）高电平工作;2）低电平模块供电关掉;
 	HAL_Delay(1000);
-//	cWIFI_Net_Mode_Choose(STA_AP);
-////	cWIFI_Rst();
+	if(cWIFI_Cmd("AT","OK",NULL,2500)==true)
+		;
+//		HAL_UART_Transmit(&WIFI_UART, (uint8_t*)"ATOK\r\n", 6, TX_TIMEOUT);
+//	if(cWIFI_Net_Mode_Choose(STA_AP)==true)
+//		HAL_UART_Transmit(&WIFI_UART, (uint8_t*)"STA_AP\r\n", 6, TX_TIMEOUT);
+//	
+//	cWIFI_Rst();
 //	cWIFI_CIPMUX();
-//	HAL_Delay(1000);
+	HAL_Delay(1000);
 	
 }
 
@@ -166,13 +171,10 @@ void cWIFI_PD ( WIFI_powerMode mode )
 
 HAL_StatusTypeDef cWIFI_strWrite(char *pString)
 {
-//  uint16_t length = 0;
 	HAL_StatusTypeDef status = HAL_OK;
-	
-//	length = strlen(pString)+2;
-//	strcat(pString,"\r\n");
+
 	status = HAL_UART_Transmit(&WIFI_UART, (uint8_t*)pString, strlen(pString), TX_TIMEOUT);
-//	status = HAL_UART_Transmit(&WIFI_UART, "\r\n", 2, 10);
+	status = HAL_UART_Transmit(&WIFI_UART, (uint8_t*)"\r\n", 2, TX_TIMEOUT);
 
   return status;
 }
@@ -197,39 +199,146 @@ HAL_StatusTypeDef cWIFI_strRead(char *pString, uint32_t timeout)
  *         0，指令发送失败
  * 调用  ：被外部调用
  */
+uint8_t cWIFI_WaitResponse(char *_pAckStr, uint32_t _msTimeOut);
 bool cWIFI_Cmd (char * cmd, char * reply1, char * reply2, uint32_t timeout)
 {    
 
 	cWIFI_strWrite(cmd);
-	osDelay(1);
+
 	if((reply1 == 0) &&(reply2 == 0))                      //不需要接收数据
 		return true;
 	
-	memset(wifiData.buffer, 0x00, BUFFER_MAX);
-	cWIFI_strRead(wifiData.buffer,timeout);                //延时
-	  
-	if((reply1 != 0) &&(reply2 != 0))
-	{
-		return((bool) strstr(wifiData.buffer, reply1) ||(bool) strstr(wifiData.buffer, reply2)); 
-	}
-	else if(reply1 != 0)
-	{
-		return((bool) strstr(wifiData.buffer, reply1));
-	}
-	else
-	{
-		return((bool) strstr(wifiData.buffer, reply2));
-	}
+	return cWIFI_WaitResponse(reply1,timeout);
+//	memset(wifiData.buffer, 0x00, BUFFER_MAX);
+//	if((reply1 != 0) &&(reply2 != 0))
+//	{
+//		return((bool) strstr(wifiData.buffer, reply1) ||(bool) strstr(wifiData.buffer, reply2)); 
+//	}
+//	else if(reply1 != 0)
+//	{
+//		return((bool) strstr(wifiData.buffer, reply1));
+//	}
+//	else
+//	{
+//		return((bool) strstr(wifiData.buffer, reply2));
+//	}
 }
 
+/*
+*********************************************************************************************************
+*	函 数 名: ESP8266_WaitResponse
+*	功能说明: 等待ESP8266返回指定的应答字符串, 可以包含任意字符。只要接收齐全即可返回。
+*	形    参: _pAckStr : 应答的字符串， 长度不得超过255
+*			 _usTimeOut : 命令执行超时，0表示一直等待. >０表示超时时间，单位1ms
+*	返 回 值: 1 表示成功  0 表示失败
+*********************************************************************************************************
+*/
+uint8_t cWIFI_WaitResponse(char *_pAckStr, uint32_t _msTimeOut)
+{
+	uint8_t ucData;
+	uint16_t pos = 0;
+	uint32_t len;
+	uint32_t ulStart;
+	
+	len = strlen(_pAckStr);
+	if (len > 255)
+	{
+		return 0;
+	}
+	/* _usTimeOut == 0 表示无限等待 */
+	ulStart = HAL_GetTick();
+
+	while (1)
+	{
+		if(((HAL_GetTick() - ulStart ) > _msTimeOut))
+		{
+			printf("Timeout\r\n");		/* 将接收到数据打印到调试串口1 */
+			return false;	/* 超时 */
+		}
+		if (HAL_UART_Receive(&WIFI_UART, &ucData, 1, _msTimeOut)!=HAL_TIMEOUT)
+		{
+
+			if (ucData == _pAckStr[pos])
+			{
+
+				pos++;
+				if (pos == len)
+				{
+					printf("Command OK\r\n");
+					return true;	/* 收到指定的应答数据，返回成功 */
+				}
+			}
+			else
+			{
+				pos = 0;
+			}
+		}
+	}
+}
+uint8_t cWIFI_TCPSend(uint32_t _msTimeOut)
+{
+	uint32_t len;
+	uint32_t ulStart;
+	char cmd[32];
+	char buf[64] = "\0";
+	char content[256] = "\0";
+	uint16_t temp=0;
+	
+	ulStart = HAL_GetTick();
+	printf("Start making content\r\n");
+	sprintf(buf, "GET %s\r\n", "/api/hardware/status HTTP/1.1");
+//	osDelay(100); printf("sprintf_len:%d\r\n",temp);
+//	osDelay(100); printf("buf1:%s\r\n",buf);
+//	memset(content, 0x00, 1);
+	strcat(content, buf);
+	osDelay(100); printf("content1:%s\r\n",content);
+  sprintf(buf, "Host: %s\r\n\r\n", "alexyan.xyz:4000");
+  strcat(content, buf);
+
+	len = strlen(content);
+	osDelay(100); printf("content:%s\r\n",content);
+	osDelay(100); printf("length:%d\r\n",len);
+	sprintf(cmd, "AT+CIPSEND=%d", len);
+	osDelay(100); printf("Start sending length\r\n");
+	cWIFI_Cmd(cmd,"OK\r\n>",NULL,2500);
+	osDelay(2000);
+	
+	printf("Start sending content\r\n");
+	HAL_UART_Transmit(&WIFI_UART, content, len, 2500);
+	memset(wifiData.buffer, 0x00, BUFFER_MAX);
+	HAL_UART_Receive_DMA(&WIFI_UART, wifiData.buffer,BUFFER_MAX);
+
+	/* _usTimeOut == 0 表示无限等待 */
+
+	while (1)
+	{
+		if(((HAL_GetTick() - ulStart ) > _msTimeOut))
+		{
+			printf("Timeout\r\n");		/* 将接收到数据打印到调试串口1 */
+			return false;	/* 超时 */
+		}
+		else if(strstr(wifiData.buffer, "+IPD"))
+		{
+			osDelay(10);
+			printf("Receive OK\r\n");
+			printf("%s",wifiData.buffer);
+			return true;
+		}
+		else
+		{
+		osDelay(100);printf("%d\r\n",temp++);
+		}
+	}
+}
 void cWIFI_Rst ( void )
 {
-//cWIFI_Cmd ( "AT+RST", "OK", "ready", 2500 );   	
-	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_RESET);
-	osDelay(100);
-	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_SET);
-	osDelay(1000); 
-	wifiState.state = 1;
+  cWIFI_Cmd ( "AT+RST", "OK", "ready", 2500 ); 
+		HAL_Delay(2000);
+//	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_RESET);
+//	osDelay(100);
+//	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_SET);
+//	osDelay(1000); 
+//	wifiState.state = 1;
 }
 
 void cWIFI_AT_Test ( void )
@@ -237,7 +346,7 @@ void cWIFI_AT_Test ( void )
 	wifiState.error = 0;
 	if(wifiState.state > 1)
 	{
-		while(cWIFI_Cmd ("AT", "OK", NULL, 250)==0)
+		while(cWIFI_Cmd ("AT", "OK", NULL, 250)==false)
 		{
 			wifiState.error++;
 			if(wifiState.error > ERROR_MAX)
@@ -298,7 +407,7 @@ bool cWIFI_Net_Mode_Choose ( ENUM_Net_ModeTypeDef enumMode )
 void cWIFI_CIPMUX ( void )
 {
 	wifiState.error = 0;
-	while(cWIFI_Cmd("AT+CIPMODE=0","OK",NULL,200)==0)		//不透明传输:AT+CIPMODE=0
+	while(cWIFI_Cmd("AT+CIPMODE=0","OK",NULL,200)==false)		//不透明传输:AT+CIPMODE=0
 	{
 		wifiState.error++;
 		if(wifiState.error > ERROR_MAX)
@@ -337,19 +446,19 @@ void cWIFI_CWLAP ( void )
  *         0，连接失败
  * 调用  ：被外部调用
  */
-bool cWIFI_CWJAP ( char * pSSID, char * pPassWord )
+bool cWIFI_CWJAP ( char * pSSID, char * pPassWord, uint32_t timeout )
 {
 	char cCmd [128];
 
-	sprintf ( cCmd, "AT+CWJAP=\"%s\",\"%s\"\r\n", pSSID, pPassWord );
+	sprintf ( cCmd, "AT+CWJAP=\"%s\",\"%s\"", pSSID, pPassWord );
 	
-	return cWIFI_Cmd ( cCmd, "OK", NULL, 7800 );
+	return cWIFI_Cmd ( cCmd, "OK", NULL, timeout );
 }
 
 void cWIFI_JoinAP ( void )
 {
 	wifiState.error = 0;
-	while(cWIFI_CWJAP(WIFI_SSID_NAME,WIFI_PASSWORD)==0)
+	while(cWIFI_CWJAP(WIFI_SSID_NAME,WIFI_PASSWORD, 7800)==0)
 	{
 			wifiState.error++;
 			if(wifiState.error > ERROR_MAX)

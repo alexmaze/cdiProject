@@ -1,4 +1,4 @@
-master\ctask.o: ..\..\YD-CdiLibrary\cTask.c
+master\ctask.o: ..\..\YD-HalCdiLibrary\cTask.c
 master\ctask.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 master\ctask.o: D:\Keil\ARM\ARMCC\Bin\..\include\stddef.h
 master\ctask.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
@@ -19,7 +19,7 @@ master\ctask.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 master\ctask.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 master\ctask.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 master\ctask.o: D:\Keil\ARM\ARMCC\Bin\..\include\string.h
-master\ctask.o: ..\..\YD-CdiLibrary\cTask.h
+master\ctask.o: ..\..\YD-HalCdiLibrary\cTask.h
 master\ctask.o: ../Inc/main.h
 master\ctask.o: ../Inc/usart.h
 master\ctask.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h
@@ -49,7 +49,7 @@ master\ctask.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr_ex.h
 master\ctask.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h
 master\ctask.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h
 master\ctask.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h
-master\ctask.o: ..\..\YD-CdiLibrary\cLEDs.h
-master\ctask.o: ..\..\YD-CdiLibrary\cWIFI.h
-master\ctask.o: ..\..\YD-CdiLibrary\httpPacket.h
+master\ctask.o: ..\..\YD-HalCdiLibrary\cLEDs.h
+master\ctask.o: ..\..\YD-HalCdiLibrary\cWIFI.h
+master\ctask.o: ..\..\YD-HalCdiLibrary\httpPacket.h
 master\ctask.o: D:\Keil\ARM\ARMCC\Bin\..\include\stdbool.h
