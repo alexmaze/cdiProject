@@ -92,6 +92,8 @@ typedef struct wifi_state
 	ENUM_WifiState stateExpect;
 	
 	uint8_t error;
+	uint8_t cwjap;
+	uint8_t cipmode;
 	
 }WifiState;
 
@@ -170,10 +172,10 @@ void cWIFI_Packet(OPS_TYPE operType, char* jsonData);
 bool cWIFI_Cmd (char * cmd, char * reply1, char * reply2, uint32_t timeout);
 bool cWIFI_CWJAP ( char * pSSID, char * pPassWord, uint32_t timeout );
 uint8_t cWIFI_TCPSend(uint32_t _msTimeOut);
+void cWIFI_CIPMODE ( uint8_t state );
 
 
-
-
+bool cWIFI_Cmd(char * cmd, char * replyFirst, char * replySecond, uint32_t msTimeout);
 
 
 
