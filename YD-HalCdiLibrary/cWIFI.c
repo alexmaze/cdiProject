@@ -51,7 +51,7 @@ void cWIFI_Init(void)
 {
 
 	HAL_GPIO_WritePin(WIFI_WorkMode_GPIO_Port,WIFI_WorkMode_Pin,GPIO_PIN_RESET);	//下拉：工作模式;
-	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_SET);	//1）高电平工作;2）低电平模块供电关掉;
+	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_SET);								//1）高电平工作;2）低电平模块供电关掉;
 	HAL_Delay(1000);
 	if(cWIFI_Cmd(AT,"OK",NULL,2500)==true)
 		printf("AT Test OK\r\n");
@@ -190,7 +190,8 @@ HAL_StatusTypeDef cWIFI_strRead(char *pString, uint32_t timeout)
  * 调用  ：被外部调用
  */
 uint8_t cWIFI_WaitResponse(char *_pAckStr, uint32_t _msTimeOut);
-bool cWIFI_Cmd (char * cmd, char * reply1, char * reply2, uint32_t timeout)
+
+bool cWIFI_CmdOld (char * cmd, char * reply1, char * reply2, uint32_t timeout)
 {    
 
 	cWIFI_strWrite(cmd);
@@ -212,6 +213,95 @@ bool cWIFI_Cmd (char * cmd, char * reply1, char * reply2, uint32_t timeout)
 //	{
 //		return((bool) strstr(wifiData.buffer, reply2));
 //	}
+}
+
+/* reply 有顺序 */
+//问题：memset(wifiData.buffer, 0, BUFFER_MAX);运行时间太长了
+bool cWIFI_Cmd(char * cmd, char * replyFirst, char * replySecond, uint32_t msTimeout)
+{    
+	HAL_StatusTypeDef status = HAL_OK;
+	uint32_t msTimeStart;
+	char *pHead = NULL;
+	
+	/* 发送数据 */
+	status = HAL_UART_Transmit(&WIFI_UART, (uint8_t*)cmd, strlen(cmd), TX_TIMEOUT);
+	if(status!=HAL_OK){	return false;	}
+	status = HAL_UART_Transmit(&WIFI_UART, (uint8_t*)"\r\n", 2, TX_TIMEOUT);
+	if(status!=HAL_OK){	return false;	}
+	
+	/* 不需要接收数据 */
+	if((replyFirst == 0) &&(replySecond == 0)) 	
+	{	return true;	}
+	
+	msTimeStart = HAL_GetTick();
+	memset(wifiData.buffer, 0, BUFFER_MAX);
+	HAL_UART_Receive_DMA(&WIFI_UART, (uint8_t *)wifiData.buffer, BUFFER_MAX);
+
+	while(1)
+	{
+		pHead = strstr(wifiData.buffer, replyFirst);
+		printf("pHead:%s\r\n",pHead);
+		if(pHead)
+		{
+			if(replySecond == NULL)
+			{
+				HAL_UART_DMAStop(&WIFI_UART);
+				printf("Command OK================\r\n");
+				return true;	/* 收到指定的应答数据，返回成功 */
+			}
+			else if((replySecond != NULL)&&strstr(pHead, replySecond))
+			{
+				HAL_UART_DMAStop(&WIFI_UART);
+				printf("Command OK```````````````\r\n");
+				return true;	/* 收到指定的应答数据，返回成功 */
+			}
+		}
+		else
+		{
+			printf("cWIFI_CmdTwoRespond Delay 100ms\r\n");
+			osDelay(100);
+		}
+		if(((HAL_GetTick() - msTimeStart ) > msTimeout))
+		{
+			printf("cWIFI_CmdTwoRespond Timeout\r\n");		/* 将接收到数据打印到调试串口 */
+			return false;							/* 超时 */
+		}
+	}
+}
+void cWIFI_StateCheck (char *cmd, uint8_t state)
+{
+	char buf[16];
+	
+	*buf = *cmd;
+	strcat(buf,"?");
+	if(state==0)	//不透明传输:AT+CIPMODE=0
+	{
+		if(cWIFI_Cmd("AT+CIPMODE?","+CIPMODE:0",NULL,2000)==true)
+		{
+			printf("AT+CIPMODE?=0");
+			wifiState.cipmode = 0;
+		}
+		else
+		{
+			cWIFI_Cmd("AT+CIPMODE=0","+CIPMODE:0",NULL,2000);
+			printf("AT+CIPMODE=0");
+			wifiState.cipmode = 0;
+		}
+	}
+	else if(state==1)	//透明传输:AT+CIPMODE=1
+	{
+		if(cWIFI_Cmd("AT+CIPMODE?","+CIPMODE:1",NULL,2000)==true)
+		{
+			printf("AT+CIPMODE?=1");
+			wifiState.cipmode = 1;
+		}
+		else
+		{
+			cWIFI_Cmd("AT+CIPMODE=1","+CIPMODE:1",NULL,2000);
+			printf("AT+CIPMODE=1");
+			wifiState.cipmode = 1;
+		}
+	}
 }
 
 /*
@@ -294,9 +384,9 @@ uint8_t cWIFI_TCPSend(uint32_t _msTimeOut)
 	osDelay(2000);
 	
 	printf("Start sending content\r\n");
-	HAL_UART_Transmit(&WIFI_UART, content, len, 2500);
+	HAL_UART_Transmit(&WIFI_UART, (uint8_t *)content, len, 2500);
 	memset(wifiData.buffer, 0x00, BUFFER_MAX);
-	HAL_UART_Receive_DMA(&WIFI_UART, wifiData.buffer,BUFFER_MAX);
+	HAL_UART_Receive_DMA(&WIFI_UART, (uint8_t *)wifiData.buffer,BUFFER_MAX);
 
 	/* _usTimeOut == 0 表示无限等待 */
 
@@ -320,18 +410,19 @@ uint8_t cWIFI_TCPSend(uint32_t _msTimeOut)
 		}
 	}
 }
-void cWIFI_Rst ( void )
+void cWIFI_Rst(void)
 {
-  cWIFI_Cmd ( "AT+RST", "ready", "ready", 2500 ); 
-		HAL_Delay(2000);
-//	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_RESET);
-//	osDelay(100);
-//	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_SET);
-//	osDelay(1000); 
-//	wifiState.state = 1;
+	wifiState.state = 0;
+	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_RESET);
+	osDelay(100);
+	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_SET);
+	osDelay(1000);
+	cWIFI_Cmd ( "AT+RST", "ready", "ready", 2500 ); 
+	HAL_Delay(2000);
+	wifiState.state = 1;
 }
 
-void cWIFI_AT_Test ( void )
+void cWIFI_AT_Test(void)
 {
 	wifiState.error = 0;
 	if(wifiState.state > 1)
@@ -393,20 +484,39 @@ bool cWIFI_Net_Mode_Choose ( ENUM_Net_ModeTypeDef enumMode )
     }
 	
 }
-void cWIFI_CIPMUX ( void )
+void cWIFI_CIPMODE ( uint8_t state )
 {
-	wifiState.error = 0;
-	while(cWIFI_Cmd("AT+CIPMODE=0","OK",NULL,200)==false)		//不透明传输:AT+CIPMODE=0
+	char buf[16] = CIPMODE;
+	
+	strcat(buf,"?");
+	if(state==0)	//不透明传输:AT+CIPMODE=0
 	{
-		wifiState.error++;
-		if(wifiState.error > ERROR_MAX)
+		if(cWIFI_Cmd("AT+CIPMODE?","+CIPMODE:0",NULL,2000)==true)
 		{
-			cWIFI_AT_Test();
-			wifiState.state = 1;
-			break;
+			printf("AT+CIPMODE?=0");
+			wifiState.cipmode = 0;
+		}
+		else
+		{
+			cWIFI_Cmd("AT+CIPMODE=0","+CIPMODE:0",NULL,2000);
+			printf("AT+CIPMODE=0");
+			wifiState.cipmode = 0;
 		}
 	}
-	wifiState.state = 2;
+	else if(state==1)	//透明传输:AT+CIPMODE=1
+	{
+		if(cWIFI_Cmd("AT+CIPMODE?","+CIPMODE:1",NULL,2000)==true)
+		{
+			printf("AT+CIPMODE?=1");
+			wifiState.cipmode = 1;
+		}
+		else
+		{
+			cWIFI_Cmd("AT+CIPMODE=1","+CIPMODE:1",NULL,2000);
+			printf("AT+CIPMODE=1");
+			wifiState.cipmode = 1;
+		}
+	}
 }
 
 void cWIFI_CIPMUX2 ( void )
@@ -451,14 +561,30 @@ void cWIFI_CWLAP ( void )
  *         0，连接失败
  * 调用  ：被外部调用
  */
-bool cWIFI_CWJAP ( char * pSSID, char * pPassWord, uint32_t timeout )
+bool cWIFI_CWJAP ( char * pSSID, char * pPassword, uint32_t msTimeout )
 {
-	char cCmd [128];
-
-	sprintf ( cCmd, "AT+CWJAP=\"%s\",\"%s\"", pSSID, pPassWord );
+	char buf[128] = CWJAP;
 	
-	return cWIFI_Cmd ( cCmd, "OK", NULL, timeout );
+	if(cWIFI_Cmd("AT+CWJAP?","+CWJAP:", pSSID, 1000)==true)
+	{
+		printf("WIFI connect successfullly\r\n");
+		wifiState.cwjap = 1;
+		return true;
+	}
+	else
+	{
+		sprintf (buf, "AT+CWJAP=\"%s\",\"%s\"", pSSID, pPassword);
+		if(cWIFI_Cmd("AT+CWJAP?","WIFI CONNECTED", "WIFI GOT IP", 1000)==true)
+		{
+			printf("WIFI connect successfullly\r\n");
+			wifiState.cwjap = 1;
+			return true;
+		}
+		else
+		{	wifiState.cwjap = 0;	return false;	}
+	}
 }
+
 
 void cWIFI_JoinAP ( void )
 {
