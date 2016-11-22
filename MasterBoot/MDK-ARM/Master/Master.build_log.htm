@@ -27,17 +27,20 @@ Project File Date:  11/21/2016
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 2 (build 183)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target 'Master'
+compiling freertos.c...
+compiling main.c...
 compiling cWIFI.c...
-..\..\YD-HalCdiLibrary\cWIFI.c(307): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\YD-HalCdiLibrary\cWIFI.c(297): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
   	HAL_UART_Transmit(&
 IFI_UART, content, len, 2500);
-..\..\YD-HalCdiLibrary\cWIFI.c(309): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
+..\..\YD-HalCdiLibrary\cWIFI.c(299): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "uint8_t *"
   	HAL_UART_Receive_DMA(&
 IFI_UART, wifiData.buffer,
 UFFER_MAX);
 ..\..\YD-HalCdiLibrary\cWIFI.c: 2 warnings, 0 errors
+compiling cTask.c...
 linking...
-Program Size: Code=13268 RO-data=432 RW-data=164 ZI-data=5724  
+Program Size: Code=13280 RO-data=432 RW-data=164 ZI-data=5724  
 "Master\Master.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>

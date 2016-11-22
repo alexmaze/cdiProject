@@ -19,7 +19,7 @@ master\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 master\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 master\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 master\freertos.o: ..\..\YD-HalCdiLibrary\cTask.h
-master\freertos.o: ../Inc/main.h
+master\freertos.o: ..\..\YD-HalCdiLibrary\main.h
 master\freertos.o: ../Inc/usart.h
 master\freertos.o: ../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h
 master\freertos.o: ../Inc/stm32l1xx_hal_conf.h

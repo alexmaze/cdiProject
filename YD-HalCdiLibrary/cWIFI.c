@@ -16,15 +16,13 @@ brief	:	code file
 
 char WIFI_SSID_NAME[] = "YD-Xiaoxin";
 char WIFI_PASSWORD[]  = "12341234";
-//char WIFI_SSID_NAME[] = "QK365";
-//char WIFI_PASSWORD[] = "kunlong123456";
 
 char TCP_SERVER_IPADDRESS[] = "alexyan.xyz";
 char TCP_SERVER_PORT[] = "4000";
 //char TCP_SERVER_IPADDRESS[] = "183.230.40.33";
 //char TCP_SERVER_PORT[] = "80";
-	 
-char TCP_CILENT_IPADDRESS[] = "ESP_113AFD";
+
+char TCP_CILENT_IPADDRESS[] = "SmartNode_Controller";
 char TCP_CILENT_PORT[] = "8000";
 
 HttpPacket httpPacket;
@@ -36,16 +34,6 @@ WIFI_DataType wifiData;
 //httpPacket.host="cdi.tongji.edu.cn";
 //httpPacket.contentType = "application/json";
 
-#ifdef __GNUC__  
-#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)  
-#else  
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)  
-#endif /* __GNUC__ */  
-PUTCHAR_PROTOTYPE  
-{  
-    HAL_UART_Transmit(&DEBUG_UART , (uint8_t *)&ch, 1, 100);  
-    return ch;  
-}
 
 /**
 ****************************************************************
@@ -61,12 +49,14 @@ brief	:	initialize the RGB pins
 
 void cWIFI_Init(void)
 {
-//	MX_USART1_UART_Init();	//必须注释才能通过串口发送指令
+
 	HAL_GPIO_WritePin(WIFI_WorkMode_GPIO_Port,WIFI_WorkMode_Pin,GPIO_PIN_RESET);	//下拉：工作模式;
 	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_SET);	//1）高电平工作;2）低电平模块供电关掉;
 	HAL_Delay(1000);
-	if(cWIFI_Cmd("AT","OK",NULL,2500)==true)
-		;
+	if(cWIFI_Cmd(AT,"OK",NULL,2500)==true)
+		printf("AT Test OK\r\n");
+	if(cWIFI_Cmd("AT+CIPMODE=0","OK",NULL,1000)==true)	//AT+CIPMODE=0:不透明传输; AT+CIPMODE=1:透明传输
+		printf("");
 //		HAL_UART_Transmit(&WIFI_UART, (uint8_t*)"ATOK\r\n", 6, TX_TIMEOUT);
 //	if(cWIFI_Net_Mode_Choose(STA_AP)==true)
 //		HAL_UART_Transmit(&WIFI_UART, (uint8_t*)"STA_AP\r\n", 6, TX_TIMEOUT);
@@ -332,7 +322,7 @@ uint8_t cWIFI_TCPSend(uint32_t _msTimeOut)
 }
 void cWIFI_Rst ( void )
 {
-  cWIFI_Cmd ( "AT+RST", "OK", "ready", 2500 ); 
+  cWIFI_Cmd ( "AT+RST", "ready", "ready", 2500 ); 
 		HAL_Delay(2000);
 //	HAL_GPIO_WritePin(WIFI_PD_GPIO_Port,WIFI_PD_Pin,GPIO_PIN_RESET);
 //	osDelay(100);
@@ -403,8 +393,23 @@ bool cWIFI_Net_Mode_Choose ( ENUM_Net_ModeTypeDef enumMode )
     }
 	
 }
-
 void cWIFI_CIPMUX ( void )
+{
+	wifiState.error = 0;
+	while(cWIFI_Cmd("AT+CIPMODE=0","OK",NULL,200)==false)		//不透明传输:AT+CIPMODE=0
+	{
+		wifiState.error++;
+		if(wifiState.error > ERROR_MAX)
+		{
+			cWIFI_AT_Test();
+			wifiState.state = 1;
+			break;
+		}
+	}
+	wifiState.state = 2;
+}
+
+void cWIFI_CIPMUX2 ( void )
 {
 	wifiState.error = 0;
 	while(cWIFI_Cmd("AT+CIPMODE=0","OK",NULL,200)==false)		//不透明传输:AT+CIPMODE=0
@@ -650,6 +655,5 @@ void cWIFI_Packet(OPS_TYPE operType, char* jsonData)
 //        return RET_ERR;
 //    }
 }
-
 
 

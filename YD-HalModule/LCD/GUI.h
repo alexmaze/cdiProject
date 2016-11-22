@@ -5,8 +5,7 @@
 
 #include "lcd.h"
 #include "string.h"
- 
-#include "stm32l1xx_hal.h"
+#include "stm32f1xx_hal.h"
 
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
@@ -45,5 +44,7 @@ void gui_circle(int xc, int yc,uint16_t c,int r, int fill);
 void Gui_StrCenter(uint16_t x, uint16_t y, uint16_t fc, uint16_t bc, uint8_t *str,uint8_t size,uint8_t mode);
 void LCD_DrawFillRectangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
 void LCD_ShowNum2412(uint16_t x,uint16_t y,uint16_t fc, uint16_t bc,uint8_t *p ,uint8_t size,uint8_t mode);
+void LCD_Image(const unsigned char *p);
+
 #endif
 

@@ -56,6 +56,16 @@ void MX_FREERTOS_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
+#ifdef __GNUC__  
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)  
+#else  
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)  
+#endif /* __GNUC__ */  
+PUTCHAR_PROTOTYPE
+{  
+	HAL_UART_Transmit(&DEBUG_UART , (uint8_t *)&ch, 1, 100);  
+	return ch;  
+}
 
 /* USER CODE END PFP */
 

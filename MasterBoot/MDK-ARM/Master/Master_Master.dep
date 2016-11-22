@@ -641,7 +641,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x578B4D28)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x578B4D28)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x578B4D27)
 I (..\..\YD-HalCdiLibrary\cTask.h)(0x57E68709)
-I (../Inc/main.h)(0x5832ABB6)
+I (..\..\YD-HalCdiLibrary\main.h)(0x555B2CB0)
 I (../Inc/usart.h)(0x5832A917)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x578B4D22)
 I (../Inc/stm32l1xx_hal_conf.h)(0x5832A918)
@@ -668,11 +668,11 @@ I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr_ex.h)(0x578B4D22)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h)(0x578B4D22)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x578B4D22)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h)(0x578B4D22)
-I (..\..\YD-HalCdiLibrary\cLEDs.h)(0x578B809F)
-I (..\..\YD-HalCdiLibrary\cWIFI.h)(0x5832F472)
+I (..\..\YD-HalCdiLibrary\cLEDs.h)(0x5833A36F)
+I (..\..\YD-HalCdiLibrary\cWIFI.h)(0x5833B4A0)
 I (..\..\YD-HalCdiLibrary\httpPacket.h)(0x578E2A27)
 I (D:\Keil\ARM\ARMCC\include\stdbool.h)(0x56FE42DC)
-F (../Src/main.c)(0x5832AF05)(-c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ..\YD-innoLib -I ..\..\YD-CdiLibrary -I ..\..\YD-HalCdiLibrary --C99-I E:\Documents\cdiProject\MasterBoot\MDK-ARM\RTE-I D:\Keil\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I D:\Keil\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32L1XX_MD -DUSE_HAL_DRIVER -DSTM32L152xB-o master\main.o --omf_browse master\main.crf --depend master\main.d)
+F (../Src/main.c)(0x5833A68E)(-c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ..\YD-innoLib -I ..\..\YD-CdiLibrary -I ..\..\YD-HalCdiLibrary --C99-I E:\Documents\cdiProject\MasterBoot\MDK-ARM\RTE-I D:\Keil\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I D:\Keil\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32L1XX_MD -DUSE_HAL_DRIVER -DSTM32L152xB-o master\main.o --omf_browse master\main.crf --depend master\main.d)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x578B4D22)
 I (../Inc/stm32l1xx_hal_conf.h)(0x5832A918)
 I (../Inc/mxconstants.h)(0x5832A918)
@@ -723,9 +723,9 @@ I (../Inc/gpio.h)(0x5832A914)
 I (D:\Keil\ARM\ARMCC\include\string.h)(0x56FE42DE)
 I (../Inc/main.h)(0x5832ABB6)
 I (..\..\YD-HalCdiLibrary\dataStruct.h)(0x57DA0AAC)
-I (..\..\YD-HalCdiLibrary\cLEDs.h)(0x578B809F)
+I (..\..\YD-HalCdiLibrary\cLEDs.h)(0x5833A36F)
 I (..\..\YD-HalCdiLibrary\cTask.h)(0x57E68709)
-I (..\..\YD-HalCdiLibrary\cWIFI.h)(0x5832F472)
+I (..\..\YD-HalCdiLibrary\cWIFI.h)(0x5833B4A0)
 I (..\..\YD-HalCdiLibrary\httpPacket.h)(0x578E2A27)
 I (D:\Keil\ARM\ARMCC\include\stdbool.h)(0x56FE42DC)
 F (../Drivers/CMSIS//Device/ST/STM32L1xx/Source/Templates/system_stm32l1xx.c)(0x578B4D06)(-c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ..\YD-innoLib -I ..\..\YD-CdiLibrary -I ..\..\YD-HalCdiLibrary --C99-I E:\Documents\cdiProject\MasterBoot\MDK-ARM\RTE-I D:\Keil\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I D:\Keil\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32L1XX_MD -DUSE_HAL_DRIVER -DSTM32L152xB-o master\system_stm32l1xx.o --omf_browse master\system_stm32l1xx.crf --depend master\system_stm32l1xx.d)
@@ -899,8 +899,8 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x578B4D28)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x578B4D28)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x578B4D28)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h)(0x578B4D28)
-F (..\..\YD-HalCdiLibrary\cLEDs.c)(0x58328FF8)(-c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ..\YD-innoLib -I ..\..\YD-CdiLibrary -I ..\..\YD-HalCdiLibrary --C99-I E:\Documents\cdiProject\MasterBoot\MDK-ARM\RTE-I D:\Keil\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I D:\Keil\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32L1XX_MD -DUSE_HAL_DRIVER -DSTM32L152xB-o master\cleds.o --omf_browse master\cleds.crf --depend master\cleds.d)
-I (..\..\YD-HalCdiLibrary\cLEDs.h)(0x578B809F)
+F (..\..\YD-HalCdiLibrary\cLEDs.c)(0x5833A371)(-c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ..\YD-innoLib -I ..\..\YD-CdiLibrary -I ..\..\YD-HalCdiLibrary --C99-I E:\Documents\cdiProject\MasterBoot\MDK-ARM\RTE-I D:\Keil\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I D:\Keil\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32L1XX_MD -DUSE_HAL_DRIVER -DSTM32L152xB-o master\cleds.o --omf_browse master\cleds.crf --depend master\cleds.d)
+I (..\..\YD-HalCdiLibrary\cLEDs.h)(0x5833A36F)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x578B4D22)
 I (../Inc/stm32l1xx_hal_conf.h)(0x5832A918)
 I (../Inc/mxconstants.h)(0x5832A918)
@@ -930,10 +930,10 @@ I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr_ex.h)(0x578B4D22)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h)(0x578B4D22)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x578B4D22)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h)(0x578B4D22)
-F (..\..\YD-HalCdiLibrary\cWIFI.c)(0x58330B97)(-c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ..\YD-innoLib -I ..\..\YD-CdiLibrary -I ..\..\YD-HalCdiLibrary --C99-I E:\Documents\cdiProject\MasterBoot\MDK-ARM\RTE-I D:\Keil\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I D:\Keil\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32L1XX_MD -DUSE_HAL_DRIVER -DSTM32L152xB-o master\cwifi.o --omf_browse master\cwifi.crf --depend master\cwifi.d)
+F (..\..\YD-HalCdiLibrary\cWIFI.c)(0x5833B156)(-c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ..\YD-innoLib -I ..\..\YD-CdiLibrary -I ..\..\YD-HalCdiLibrary --C99-I E:\Documents\cdiProject\MasterBoot\MDK-ARM\RTE-I D:\Keil\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I D:\Keil\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32L1XX_MD -DUSE_HAL_DRIVER -DSTM32L152xB-o master\cwifi.o --omf_browse master\cwifi.crf --depend master\cwifi.d)
 I (D:\Keil\ARM\ARMCC\include\string.h)(0x56FE42DE)
 I (D:\Keil\ARM\ARMCC\include\stdio.h)(0x56FE42DE)
-I (..\..\YD-HalCdiLibrary\cWIFI.h)(0x5832F472)
+I (..\..\YD-HalCdiLibrary\cWIFI.h)(0x5833B4A0)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x578B4D22)
 I (../Inc/stm32l1xx_hal_conf.h)(0x5832A918)
 I (../Inc/mxconstants.h)(0x5832A918)
@@ -980,7 +980,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h)(0x578B4D28)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x578B4D28)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x578B4D28)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x578B4D27)
-F (..\..\YD-HalCdiLibrary\cTask.c)(0x5832FBD1)(-c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ..\YD-innoLib -I ..\..\YD-CdiLibrary -I ..\..\YD-HalCdiLibrary --C99-I E:\Documents\cdiProject\MasterBoot\MDK-ARM\RTE-I D:\Keil\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I D:\Keil\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32L1XX_MD -DUSE_HAL_DRIVER -DSTM32L152xB-o master\ctask.o --omf_browse master\ctask.crf --depend master\ctask.d)
+F (..\..\YD-HalCdiLibrary\cTask.c)(0x58339DDD)(-c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc -I ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Drivers/CMSIS/Include -I ../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I ..\YD-innoLib -I ..\..\YD-CdiLibrary -I ..\..\YD-HalCdiLibrary --C99-I E:\Documents\cdiProject\MasterBoot\MDK-ARM\RTE-I D:\Keil\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I D:\Keil\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32L1XX_MD -DUSE_HAL_DRIVER -DSTM32L152xB-o master\ctask.o --omf_browse master\ctask.crf --depend master\ctask.d)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x578B4D27)
 I (D:\Keil\ARM\ARMCC\include\stddef.h)(0x56FE42DE)
 I (D:\Keil\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
@@ -1002,7 +1002,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x578B4D28)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x578B4D27)
 I (D:\Keil\ARM\ARMCC\include\string.h)(0x56FE42DE)
 I (..\..\YD-HalCdiLibrary\cTask.h)(0x57E68709)
-I (../Inc/main.h)(0x5832ABB6)
+I (..\..\YD-HalCdiLibrary\main.h)(0x555B2CB0)
 I (../Inc/usart.h)(0x5832A917)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h)(0x578B4D22)
 I (../Inc/stm32l1xx_hal_conf.h)(0x5832A918)
@@ -1029,7 +1029,7 @@ I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_pwr_ex.h)(0x578B4D22)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim.h)(0x578B4D22)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_tim_ex.h)(0x578B4D22)
 I (../Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_uart.h)(0x578B4D22)
-I (..\..\YD-HalCdiLibrary\cLEDs.h)(0x578B809F)
-I (..\..\YD-HalCdiLibrary\cWIFI.h)(0x5832F472)
+I (..\..\YD-HalCdiLibrary\cLEDs.h)(0x5833A36F)
+I (..\..\YD-HalCdiLibrary\cWIFI.h)(0x5833B4A0)
 I (..\..\YD-HalCdiLibrary\httpPacket.h)(0x578E2A27)
 I (D:\Keil\ARM\ARMCC\include\stdbool.h)(0x56FE42DC)

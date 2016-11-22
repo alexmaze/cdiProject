@@ -143,8 +143,8 @@ void LCD_ShowChar(uint16_t x,uint16_t y,uint16_t fc, uint16_t bc, uint8_t num,ui
 			for(t=0;t<size/2;t++)
 		    {                 
 		        if(temp&0x01)LCD_WR_DATA(fc); 
-				else LCD_WR_DATA(bc); 
-				temp>>=1; 
+						else LCD_WR_DATA(bc); 
+						temp>>=1; 
 				
 		    }
 			
@@ -157,7 +157,7 @@ void LCD_ShowChar(uint16_t x,uint16_t y,uint16_t fc, uint16_t bc, uint8_t num,ui
 			else temp=asc2_1608[num][pos];				//use the 1608 type Font
 			for(t=0;t<size/2;t++)
 		    {   
-				POINT_COLOR=fc;              
+						POINT_COLOR=fc;              
 		        if(temp&0x01)LCD_DrawPoint(x+t,y+pos);//Draw a point    
 		        temp>>=1; 
 		    }
@@ -406,6 +406,23 @@ void Gui_Drawbmp16(uint16_t x, uint16_t y, const unsigned char *p)
 	}
 	LCD_SetWindows(0, 0, lcddev.width - 1, lcddev.height - 1);	//recover the windows to full screen
 
+}
+
+//取模方式 水平扫描 从左到右 低位在前
+void LCD_Image(const unsigned char *p) //显示126*128图片
+{
+  	int i;
+	unsigned char picH,picL;
+	LCD_Clear(WHITE); //清屏  
+	
+
+	LCD_SetWindows(0,0,127,125);		//坐标设置
+		for(i=0;i<126*128;i++)
+	 {	
+		picL=*(p+i*2);	//数据低位在前
+		picH=*(p+i*2+1);				
+		LCD_WR_DATA_16Bit(picH<<8|picL);  						
+	 }
 }
 
 

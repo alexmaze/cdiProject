@@ -80,7 +80,7 @@ void cWIFI_TaskFun(void const * argument)
 	osDelay(100);
 	cWIFI_CWJAP(WIFI_SSID_NAME,WIFI_PASSWORD, 7800);
 	osDelay(1000);
-	cWIFI_Cmd("AT+CIPSTART=\"TCP\",\"alexyan.xyz\",4000","OK",NULL,2500);
+	cWIFI_Cmd("AT+CIPSTART=\"TCP\",\"alexyan.xyz\",4000","OK",NULL,5000);
 	osDelay(1000);
 	cWIFI_TCPSend(8000);
 //	cWIFI_Cmd("AT+CIPSEND=67","OK",NULL,2500);

@@ -11,9 +11,11 @@ Time			:	07 Dec. 2015
 #ifndef _LCD_H_
 #define _LCD_H_		
  
-#include "stdlib.h"
-#include "stm32l1xx_hal.h"
-#include "spi.h"
+#include <stdlib.h>
+#include "stm32f1xx_hal.h"
+
+
+extern SPI_HandleTypeDef hspi2;
 
 typedef struct  
 {										    
@@ -43,21 +45,23 @@ extern uint16_t  BACK_COLOR;
 
 #define hspix hspi2
 
-#define LCD_LED        	GPIO_PIN_8  //PA8 connect to TFT -LED with PWM
+#define LCD_LED        	GPIO_PIN_0  //PA8 connect to TFT -LED with PWM
 #define LCD_CTRL   	  	GPIOB				//port of LCD
-#define LCD_RS         	GPIO_PIN_12	//PB10 connect to TFT --RS
-#define LCD_CS        	GPIO_PIN_14 //PB11 connect to TFT --CS							    
+#define LCD_RS         	GPIO_PIN_1	//PB10 connect to TFT --RS
+#define LCD_CS        	GPIO_PIN_12 //PB11 connect to TFT --CS
+#define LCD_RST        	GPIO_PIN_10 //PB1 connect to TFT --RST
+
 //set pins
 #define	LCD_CS_SET  	HAL_GPIO_WritePin(LCD_CTRL,LCD_CS,GPIO_PIN_SET);    
 #define	LCD_RS_SET  	HAL_GPIO_WritePin(LCD_CTRL,LCD_RS,GPIO_PIN_SET);
-#define	LCD_LED_SET  	HAL_GPIO_WritePin(GPIOA,LCD_LED,GPIO_PIN_SET);
-//#define	LCD_RST_SET  	HAL_GPIO_WritePin(LCD_CTRL,LCD_RST,GPIO_PIN_SET);
+#define	LCD_LED_SET  	HAL_GPIO_WritePin(LCD_CTRL,LCD_LED,GPIO_PIN_SET);
+#define	LCD_RST_SET  	HAL_GPIO_WritePin(LCD_CTRL,LCD_RST,GPIO_PIN_SET);
 
 //clear pins
 #define	LCD_CS_CLR  	HAL_GPIO_WritePin(LCD_CTRL,LCD_CS,GPIO_PIN_RESET);    
 #define	LCD_RS_CLR  	HAL_GPIO_WritePin(LCD_CTRL,LCD_RS,GPIO_PIN_RESET);
-#define	LCD_LED_CLR  	HAL_GPIO_WritePin(GPIOA,LCD_LED,GPIO_PIN_RESET);
-//#define	LCD_RST_CLR  	HAL_GPIO_WritePin(LCD_CTRL,LCD_RST,GPIO_PIN_RESET);
+#define	LCD_LED_CLR  	HAL_GPIO_WritePin(LCD_CTRL,LCD_LED,GPIO_PIN_RESET);
+#define	LCD_RST_CLR  	HAL_GPIO_WritePin(LCD_CTRL,LCD_RST,GPIO_PIN_RESET);
 
 
 //pen color
@@ -112,6 +116,7 @@ void LCD_WriteRAM(uint16_t RGB_Code);
 uint16_t LCD_ReadRAM(void);		   
 uint16_t LCD_BGR2RGB(uint16_t c);
 void LCD_SetParam(void);
-					  		 
+
+	
 #endif  
 

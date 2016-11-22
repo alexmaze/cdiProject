@@ -1,0 +1,114 @@
+/*****************************************************************
+
+File			:	YD-Module\BLE_DA14580\BLE.h
+Fuction		:	
+Author		:	@hiyangdong
+Version		:	V1.0
+Time			:	30 Nov. 2015
+
+*****************************************************************/
+
+#ifndef _WIFI_ESP_H_
+#define _WIFI_ESP_H_
+
+#include "stm32f1xx_hal.h"
+#include <string.h>
+
+typedef struct
+{
+	char 			*wString;		//write  command
+	char 			*rString;		//return command
+	char			*aString;		//assist command
+	uint8_t  	length;
+
+}AT_TypeDef;
+
+/* Basic    */
+
+extern AT_TypeDef AT;
+
+
+//#define AT     	"AT"    		/*  DES:    restart the module          */
+//														/*  FDB:	SUC:\r\nOK\r\n 6bytes  ERR:         */
+
+#define ATE0		"ATE0"    	/*  DES:    restart the module          */
+
+#define RST     "AT+RST"    /*  DES:    restart the module          */
+
+/* WIFI     */
+#define MODE    "AT+CWMODE" /*  DES:    wifi mode
+                                SET:    AT+CWMODE=<mode>
+                                INQ:    AT+CWMODE?
+                                TST:    AT+CWMODE=?
+                                PAR:    1= Sta, 2= AP, 3=both
+                                EXP:    -                           */
+
+
+#define CWJAP   "AT+CWJAP"  /*  DES:    join the AP
+                                SET:    AT+ CWJAP =<ssid>,< pwd >
+                                INQ:    AT+ CWJAP?
+                                TST:    
+                                PAR:    ssid=ssid, pwd=password
+                                EXP:    -                           */
+
+#define CWLAP   "AT+CWLAP"  /*  DES:    list the AP
+                                SET:    AT+CWLAP                    */
+
+#define CWQAP   "AT+CWQAP"  /*  DES:    quit the AP
+                                SET:    AT+CWQAP
+                                INQ:    -
+                                TST:    AT+CWQAP=?                  */
+
+#define CWSAP   "AT+CWSAP"  /*  DES:    set the AP
+                                SET:    AT+ CWSAP= <ssid>,<pwd>,<chl>, <ecn>
+                                INQ:    AT+ CWSAP?
+                                TST:    -
+                                PAR:    ssid, pwd, chl = channel, ecn = encryption
+                                EXP:    AT+CWJAP="YOURSSID","helloworld"    */
+
+/* TCP/IP   */
+#define CIPSTATUS  "AT+CIPSTATUS"   /*  DES:    get the connection status
+                                        SET:    AT+ CIPSTATUS               */
+
+#define CIPSTART   "AT+CIPSTART"    /*  DES:    set up TCP or UDP connection
+                                        SET:    1)single connection (+CIPMUX=0):    AT+CIPSTART= <type>,<addr>,<port>
+                                                2) multiple connection (+CIPMUX=1): AT+CIPSTART= <id><type>,<addr>, <port>
+                                            INQ:    -
+                                            TST:    AT+CIPSTART=?
+                                            PAR:    id = 0-4, type = TCP/UDP, addr = IP address, port= port
+                                            EXP:    Connect to another TCP server, set multiple connection first:
+                                                    AT+CIPMUX=1; connect: AT+CIPSTART=4,"TCP","X1.X2.X3.X4",9999    */
+
+#define CIPSEND    "AT+CIPSEND"    /*  DES:    send data
+                                       SET:    1)single connection(+CIPMUX=0) AT+CIPSEND=<length>
+                                               2) multiple connection (+CIPMUX=1) AT+CIPSEND= <id>,<length>
+                                       INQ:    -
+                                       TST:    AT+CIPSEND=?
+                                       PAR:    -
+                                       EXP:    send data: AT+CIPSEND=4,15 and then enter the data  */
+
+#define CIPCLOSE   "AT+CIPCLOSE"   /*  DES:    close TCP or UDP connection
+                                       SET:    AT+CIPCLOSE=<id> or AT+CIPCLOSE
+                                       INQ:    -
+                                       TST:    AT+CIPCLOSE=?     */
+
+#define CIFSR      "AT+CIFSR"      /*  DES:    Get IP address
+                                       SET:    AT+CIFSR
+                                       TST:    AT+ CIFSR=?    */
+
+#define CIPMUX     "AT+CIPMUX"     /*  DES:    set mutiple connection
+                                       SET:    AT+ CIPMUX=<mode>
+                                       INQ:    AT+ CIPMUX?
+                                       PAR:    0 for single connection 1 for mutiple connection   */
+
+#define CIPSERVER  "AT+CIPSERVER"  /*  DES:    set as server
+                                       SET:    AT+CIPSERVER= <mode>[,<port> ]
+                                       PAR:    mode 0 to close server mode, mode 1 to open; port = port
+                                       EXP:    turn on as a TCP server: AT+CIPSERVER=1,8888
+                                               check the self server IP address: AT+CIFSR=?    */
+
+#define IPD        "+IPD"          /*  DES:    received data   */
+
+
+
+#endif
